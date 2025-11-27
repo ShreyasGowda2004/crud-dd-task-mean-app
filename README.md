@@ -76,7 +76,6 @@ Frontend runs on http://localhost:8081
 - **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Complete deployment instructions
 - **[PROJECT_README.md](./PROJECT_README.md)** - Full project documentation
 - **[ARCHITECTURE.md](./ARCHITECTURE.md)** - System architecture diagrams
-- **[CHECKLIST.md](./CHECKLIST.md)** - Pre-deployment checklist
 
 ## 🐳 Docker Hub Images
 
