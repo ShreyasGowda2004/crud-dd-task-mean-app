@@ -291,12 +291,12 @@ http://4.240.92.132
 
 ```
 ┌─────────────────────────────────────────────────┐
-│              Nginx (Port 80)                     │
-│            Reverse Proxy                         │
+│              Nginx (Port 80)                    │
+│            Reverse Proxy                        │
 └─────────────┬───────────────────┬───────────────┘
               │                   │
               │                   │
-    ┌─────────▼─────────┐  ┌─────▼──────────┐
+    ┌─────────▼─────────┐  ┌─────▼───────────┐
     │   Frontend:80     │  │  Backend:8080   │
     │   (Angular)       │  │  (Node.js)      │
     └───────────────────┘  └────────┬────────┘
@@ -569,12 +569,4 @@ For issues or questions:
 
 ---
 
-## License
 
-This project is for educational/demonstration purposes.
-
----
-
-## Contributors
-
-Add your name and contribution details here.

@@ -3,57 +3,57 @@
 ## System Architecture Diagram
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
+┌──────────────────────────────────────────────────────────────────┐
 │                         Internet / User                          │
 │                              ↓ ↑                                 │
 │                    HTTP Port 80 (All Traffic)                    │
-└──────────────────────────────┬──────────────────────────────────┘
+└──────────────────────────────┬───────────────────────────────────┘
                                │
 ┌──────────────────────────────▼──────────────────────────────────┐
-│                      Ubuntu VM (Cloud)                           │
+│                      Ubuntu VM (Cloud)                          │
 │  ┌────────────────────────────────────────────────────────────┐ │
-│  │                    Docker Network                           │ │
-│  │                   (mean-network)                            │ │
-│  │                                                             │ │
+│  │                    Docker Network                          │ │
+│  │                   (mean-network)                           │ │
+│  │                                                            │ │
 │  │  ┌────────────────────────────────────────────┐            │ │
 │  │  │         Nginx Reverse Proxy                │            │ │
 │  │  │         Container: mean-nginx              │            │ │
 │  │  │         Port: 80 (exposed)                 │            │ │
-│  │  │  ┌──────────────────────────────────────┐ │            │ │
-│  │  │  │  Routes:                             │ │            │ │
-│  │  │  │  / → frontend:80                     │ │            │ │
-│  │  │  │  /api/* → backend:8080               │ │            │ │
-│  │  │  │  /health → health check              │ │            │ │
-│  │  │  └──────────────────────────────────────┘ │            │ │
+│  │  │  ┌──────────────────────────────────────┐  │            │ │
+│  │  │  │  Routes:                             │  │            │ │
+│  │  │  │  / → frontend:80                     │  │            │ │
+│  │  │  │  /api/* → backend:8080               │  │            │ │
+│  │  │  │  /health → health check              │  │            │ │
+│  │  │  └──────────────────────────────────────┘  │            │ │
 │  │  └───────────┬──────────────────┬─────────────┘            │ │
-│  │              │                  │                           │ │
-│  │  ┌───────────▼──────────┐  ┌───▼──────────────────────┐   │ │
-│  │  │   Frontend Service   │  │   Backend Service        │   │ │
-│  │  │   Container:         │  │   Container:             │   │ │
-│  │  │   mean-frontend      │  │   mean-backend           │   │ │
-│  │  │  ┌─────────────────┐ │  │  ┌──────────────────┐   │   │ │
-│  │  │  │ Angular 15 App  │ │  │  │ Node.js/Express │   │   │ │
-│  │  │  │ Served by Nginx │ │  │  │ REST API        │   │   │ │
-│  │  │  │ Port: 80        │ │  │  │ Port: 8080      │   │   │ │
-│  │  │  └─────────────────┘ │  │  └────────┬─────────┘   │   │ │
-│  │  └──────────────────────┘  │           │              │   │ │
-│  │                             │           │              │   │ │
-│  │                             └───────────┼──────────────┘   │ │
+│  │              │                  │                          │ │
+│  │  ┌───────────▼──────────┐  ┌───▼──────────────────────┐    │ │
+│  │  │   Frontend Service   │  │   Backend Service        │    │ │
+│  │  │   Container:         │  │   Container:             │    │ │
+│  │  │   mean-frontend      │  │   mean-backend           │    │ │
+│  │  │  ┌─────────────────┐ │  │  ┌──────────────────┐    │    │ │
+│  │  │  │ Angular 15 App  │ │  │  │ Node.js/Express  │    │    │ │
+│  │  │  │ Served by Nginx │ │  │  │ REST API         │    │    │ │
+│  │  │  │ Port: 80        │ │  │  │ Port: 8080       │    │    │ │
+│  │  │  └─────────────────┘ │  │  └────────┬─────────┘    │    │ │
+│  │  └──────────────────────┘  │           │              │    │ │
+│  │                            │           │              │    │ │
+│  │                            └───────────┼──────────────┘    │ │
 │  │                                         │                  │ │
 │  │                             ┌───────────▼──────────────┐   │ │
 │  │                             │   Database Service       │   │ │
 │  │                             │   Container:             │   │ │
 │  │                             │   mean-mongodb           │   │ │
-│  │                             │  ┌──────────────────┐   │   │ │
-│  │                             │  │ MongoDB 6.0      │   │   │ │
-│  │                             │  │ Port: 27017      │   │   │ │
-│  │                             │  │ Volume: Mounted  │   │   │ │
-│  │                             │  └──────────────────┘   │   │ │
+│  │                             │  ┌──────────────────┐    │   │ │
+│  │                             │  │ MongoDB 6.0      │    │   │ │
+│  │                             │  │ Port: 27017      │    │   │ │
+│  │                             │  │ Volume: Mounted  │    │   │ │
+│  │                             │  └──────────────────┘    │   │ │
 │  │                             └──────────────────────────┘   │ │
-│  └─────────────────────────────────────────────────────────────┘ │
-│                                                                   │
-│  Volume: mongodb_data (Persistent Storage)                       │
-└───────────────────────────────────────────────────────────────────┘
+│  └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│  Volume: mongodb_data (Persistent Storage)                      │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -62,59 +62,59 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        Developer                                 │
-│                    git push to main/master                       │
+│                        Developer                                │
+│                    git push to main/master                      │
 └────────────────────────────┬────────────────────────────────────┘
                              ↓
 ┌────────────────────────────▼────────────────────────────────────┐
-│                      GitHub Repository                           │
-│                 (crud-dd-task-mean-app)                          │
+│                      GitHub Repository                          │
+│                 (crud-dd-task-mean-app)                         │
 └────────────────────────────┬────────────────────────────────────┘
                              ↓
                   Triggers GitHub Actions
                              ↓
 ┌────────────────────────────▼────────────────────────────────────┐
-│                    GitHub Actions Runner                         │
+│                    GitHub Actions Runner                        │
 │  ┌────────────────────────────────────────────────────────────┐ │
 │  │              Job 1: Build and Push                         │ │
-│  │  ┌──────────────────────────────────────────────────────┐ │ │
-│  │  │ 1. Checkout code                                     │ │ │
-│  │  │ 2. Setup Docker Buildx                               │ │ │
-│  │  │ 3. Login to Docker Hub                               │ │ │
-│  │  │ 4. Build backend image                               │ │ │
-│  │  │    - Tag: latest & commit-sha                        │ │ │
-│  │  │ 5. Build frontend image                              │ │ │
-│  │  │    - Tag: latest & commit-sha                        │ │ │
-│  │  │ 6. Push images to Docker Hub                         │ │ │
-│  │  └──────────────────────────────────────────────────────┘ │ │
+│  │  ┌──────────────────────────────────────────────────────┐  │ │
+│  │  │ 1. Checkout code                                     │  │ │
+│  │  │ 2. Setup Docker Buildx                               │  │ │
+│  │  │ 3. Login to Docker Hub                               │  │ │
+│  │  │ 4. Build backend image                               │  │ │
+│  │  │    - Tag: latest & commit-sha                        │  │ │
+│  │  │ 5. Build frontend image                              │  │ │
+│  │  │    - Tag: latest & commit-sha                        │  │ │
+│  │  │ 6. Push images to Docker Hub                         │  │ │
+│  │  └──────────────────────────────────────────────────────┘  │ │
 │  └────────────────────────────┬───────────────────────────────┘ │
-└────────────────────────────────┼───────────────────────────────┘
+└────────────────────────────────┼────────────────────────────────┘
                                  ↓
 ┌────────────────────────────────▼────────────────────────────────┐
-│                        Docker Hub                                │
-│  Images:                                                         │
+│                        Docker Hub                               │
+│  Images:                                                        │
 │  - username/mean-backend:latest                                 │
 │  - username/mean-frontend:latest                                │
 └────────────────────────────┬────────────────────────────────────┘
                              ↓
 ┌────────────────────────────▼────────────────────────────────────┐
-│                    GitHub Actions Runner                         │
+│                    GitHub Actions Runner                        │
 │  ┌────────────────────────────────────────────────────────────┐ │
 │  │              Job 2: Deploy to VM                           │ │
-│  │  ┌──────────────────────────────────────────────────────┐ │ │
-│  │  │ 1. Setup SSH credentials                             │ │ │
-│  │  │ 2. Copy docker-compose.yml to VM                     │ │ │
-│  │  │ 3. Copy nginx config to VM                           │ │ │
-│  │  │ 4. SSH into VM and execute:                          │ │ │
-│  │  │    - docker compose pull                             │ │ │
-│  │  │    - docker compose down                             │ │ │
-│  │  │    - docker compose up -d                            │ │ │
-│  │  │ 5. Verify deployment                                 │ │ │
-│  │  └──────────────────────────────────────────────────────┘ │ │
+│  │  ┌──────────────────────────────────────────────────────┐  │ │
+│  │  │ 1. Setup SSH credentials                             │  │ │
+│  │  │ 2. Copy docker-compose.yml to VM                     │  │ │
+│  │  │ 3. Copy nginx config to VM                           │  │ │
+│  │  │ 4. SSH into VM and execute:                          │  │ │
+│  │  │    - docker compose pull                             │  │ │
+│  │  │    - docker compose down                             │  │ │
+│  │  │    - docker compose up -d                            │  │ │
+│  │  │ 5. Verify deployment                                 │  │ │
+│  │  └──────────────────────────────────────────────────────┘  │ │
 │  └────────────────────────────────────────────────────────────┘ │
 └────────────────────────────┬────────────────────────────────────┘
                              ↓ SSH
-┌────────────────────────────▼────────────────────────────────────┐
+┌────────────────────────────▼─────────────────────────────────────┐
 │                         Ubuntu VM                                │
 │                  Application Running                             │
 │              http://<vm-ip> accessible                           │
@@ -171,17 +171,17 @@ Angular app receives data
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│                  Docker Bridge Network                        │
-│                     (mean-network)                            │
-│                                                               │
+│                  Docker Bridge Network                       │
+│                     (mean-network)                           │
+│                                                              │
 │   Container          Internal IP      Exposed Ports          │
 │   ─────────          ───────────      ─────────────          │
 │   nginx             172.18.0.2        80 → Host:80           │
 │   frontend          172.18.0.3        80 (internal)          │
 │   backend           172.18.0.4        8080 (internal)        │
 │   mongodb           172.18.0.5        27017 (internal)       │
-│                                                               │
-│   DNS Resolution:                                             │
+│                                                              │
+│   DNS Resolution:                                            │
 │   - nginx        → 172.18.0.2                                │
 │   - frontend     → 172.18.0.3                                │
 │   - backend      → 172.18.0.4                                │
@@ -259,26 +259,26 @@ Angular app receives data
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│                      Ubuntu VM Filesystem                     │
-│                                                               │
-│   /home/ubuntu/mean-app/                                      │
+│                      Ubuntu VM Filesystem                    │
+│                                                              │
+│   /home/ubuntu/mean-app/                                     │
 │   ├── docker-compose.yml        (Orchestration config)       │
-│   ├── nginx/                                                  │
+│   ├── nginx/                                                 │
 │   │   └── nginx.conf            (Reverse proxy config)       │
 │   └── .env                      (Environment variables)      │
-│                                                               │
-│   Docker Volumes:                                             │
-│   /var/lib/docker/volumes/                                    │
+│                                                              │
+│   Docker Volumes:                                            │
+│   /var/lib/docker/volumes/                                   │
 │   └── mean-app_mongodb_data/                                 │
 │       └── _data/                (Persistent MongoDB data)    │
-│           ├── db/                                             │
-│           ├── journal/                                        │
-│           └── ...                                             │
-│                                                               │
-│   Docker Images (cached):                                     │
-│   /var/lib/docker/overlay2/                                   │
-│   ├── <image-layers>/                                         │
-│   └── ...                                                     │
+│           ├── db/                                            │
+│           ├── journal/                                       │
+│           └── ...                                            │
+│                                                              │
+│   Docker Images (cached):                                    │
+│   /var/lib/docker/overlay2/                                  │
+│   ├── <image-layers>/                                        │
+│   └── ...                                                    │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -288,29 +288,29 @@ Angular app receives data
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│                        Security Layers                        │
-│                                                               │
+│                        Security Layers                       │
+│                                                              │
 │  Layer 1: Cloud Provider Security Group                      │
-│  ├── Port 22 (SSH) - Restricted to specific IPs             │
-│  ├── Port 80 (HTTP) - Open to internet                      │
-│  └── Port 443 (HTTPS) - Optional                            │
-│                                                               │
+│  ├── Port 22 (SSH) - Restricted to specific IPs              │
+│  ├── Port 80 (HTTP) - Open to internet                       │
+│  └── Port 443 (HTTPS) - Optional                             │
+│                                                              │
 │  Layer 2: VM Firewall (UFW)                                  │
 │  ├── Port 22 - SSH access                                    │
 │  ├── Port 80 - HTTP traffic                                  │
 │  └── Deny all other incoming traffic                         │
-│                                                               │
+│                                                              │
 │  Layer 3: Docker Network Isolation                           │
 │  ├── Only Nginx exposed to host                              │
 │  ├── Backend accessible only within network                  │
 │  └── MongoDB accessible only within network                  │
-│                                                               │
+│                                                              │
 │  Layer 4: Application Security                               │
 │  ├── CORS configured in Express                              │
 │  ├── Environment variables for secrets                       │
 │  ├── GitHub Secrets for CI/CD credentials                    │
 │  └── SSH key authentication (no passwords)                   │
-│                                                               │
+│                                                              │
 │  Layer 5: Data Security                                      │
 │  ├── MongoDB data in persistent volume                       │
 │  ├── No database exposed to internet                         │
@@ -364,7 +364,7 @@ MongoDB Replica Set (3x) - Primary + Secondary nodes
 ## Monitoring Points
 
 ```
-┌────────────────────────────────────────────────────────────┐
+┌─────────────────────────────────────────────────────────────┐
 │                    Monitoring Points                        │
 │                                                             │
 │  1. Application Level                                       │
@@ -388,7 +388,7 @@ MongoDB Replica Set (3x) - Primary + Secondary nodes
 │     - API request count                                     │
 │     - MongoDB connections                                   │
 │     - Active users                                          │
-└────────────────────────────────────────────────────────────┘
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -396,7 +396,7 @@ MongoDB Replica Set (3x) - Primary + Secondary nodes
 ## Technology Stack Summary
 
 ```
-┌────────────────────────────────────────────────────────────┐
+┌─────────────────────────────────────────────────────────────┐
 │                     Technology Stack                        │
 │                                                             │
 │  Frontend:                                                  │
@@ -404,19 +404,19 @@ MongoDB Replica Set (3x) - Primary + Secondary nodes
 │  ├── TypeScript 4.8                                         │
 │  ├── Bootstrap 4                                            │
 │  ├── RxJS 7                                                 │
-│  └── Served by: Nginx Alpine                               │
+│  └── Served by: Nginx Alpine                                │
 │                                                             │
 │  Backend:                                                   │
 │  ├── Node.js 18                                             │
 │  ├── Express.js 4                                           │
 │  ├── Mongoose 6                                             │
 │  ├── CORS middleware                                        │
-│  └── Base image: node:18-alpine                            │
+│  └── Base image: node:18-alpine                             │
 │                                                             │
 │  Database:                                                  │
 │  ├── MongoDB 6.0                                            │
 │  ├── Persistent volume                                      │
-│  └── Base image: mongo:6.0                                 │
+│  └── Base image: mongo:6.0                                  │
 │                                                             │
 │  Reverse Proxy:                                             │
 │  ├── Nginx Alpine                                           │
@@ -429,7 +429,7 @@ MongoDB Replica Set (3x) - Primary + Secondary nodes
 │  ├── GitHub Actions                                         │
 │  ├── Docker Hub                                             │
 │  └── Ubuntu 22.04 LTS                                       │
-└────────────────────────────────────────────────────────────┘
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ---

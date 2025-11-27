@@ -40,8 +40,8 @@ A full-stack CRUD application built with MongoDB, Express.js, Angular 15, and No
 
 ```
 ┌─────────────────────────────────────────────────┐
-│              Nginx (Port 80)                     │
-│            Reverse Proxy                         │
+│              Nginx (Port 80)                    │
+│            Reverse Proxy                        │
 └─────────────┬───────────────────┬───────────────┘
               │                   │
               │                   │
@@ -428,6 +428,6 @@ For questions or issues:
 - Review application logs
 - Open a GitHub issue
 
----
 
-**Built with ❤️ for DevOps Practice**
+
+
