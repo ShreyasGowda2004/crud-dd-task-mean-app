@@ -1,0 +1,163 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                    AZURE VM CREATION - COMPLETE CHECKLIST                     ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+📋 BASICS TAB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Subscription: Azure for Students
+□ Resource group: mean-app-rg (create new)
+□ VM name: mean-app-vm
+□ Region: East US (or your preference)
+□ Availability: No infrastructure redundancy required
+□ Security type: Standard
+□ Image: Ubuntu Server 22.04 LTS - x64 Gen2
+□ Size: Standard_B2s (2 vCPUs, 4 GiB) - ~$30-40/month
+□ Username: azureuser
+□ SSH key source: Use existing public key
+□ SSH public key: [PASTE from DEPLOYMENT_KEYS.txt]
+□ Public inbound ports: Allow selected ports
+□ Select inbound ports: SSH (22) ✓
+
+💾 DISKS TAB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ OS disk size: 30 GiB (default)
+□ OS disk type: Standard SSD or Premium SSD
+□ Delete with VM: ✓ Checked
+
+🌐 NETWORKING TAB ⚠️ CRITICAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Virtual network: (new) mean-app-vm-vnet
+□ Subnet: (new) default
+□ Public IP: (new) mean-app-vm-ip
+□ NIC security group: Basic
+□ Select inbound ports: 
+   ✓ SSH (22)
+   ✓ HTTP (80)      ← MUST ADD
+   ✓ HTTPS (443)    ← MUST ADD
+
+⚙️ MANAGEMENT TAB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Auto-shutdown: Optional (recommended for cost savings)
+□ Boot diagnostics: Enabled (recommended)
+
+📊 MONITORING TAB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Keep defaults
+
+🔧 ADVANCED TAB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Keep empty (no extensions or cloud-init)
+
+🏷️ TAGS TAB (Optional)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Project: mean-crud-app
+□ Environment: production
+□ ManagedBy: github-actions
+
+✅ REVIEW + CREATE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Wait for "Validation passed"
+□ Verify cost: ~$30-40/month
+□ Verify all settings above
+□ Click "Create"
+
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                            AFTER DEPLOYMENT                                   ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+✅ STEP 1: Get Public IP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Click "Go to resource"
+□ Copy "Public IP address"
+□ Write it here: ___.___.___.___
+
+✅ STEP 2: Test SSH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Run: ssh -i ~/.ssh/azure_vm_key azureuser@YOUR_VM_IP
+□ Accept fingerprint: yes
+□ Verify connection works
+
+✅ STEP 3: Configure GitHub Secrets
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Go to: github.com/ShreyasGowda2004/crud-dd-task-mean-app/settings/secrets/actions
+
+□ DOCKER_USERNAME: shreyasgowda2004
+□ DOCKER_PASSWORD: [Your Docker Hub password/token]
+□ VM_HOST: [VM Public IP from Step 1]
+□ VM_USERNAME: azureuser
+□ VM_SSH_KEY: [Private key from DEPLOYMENT_KEYS.txt]
+
+✅ STEP 4: Set Up VM Environment
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+On VM (via SSH):
+□ Update system: sudo apt update && sudo apt upgrade -y
+□ Install Docker: curl -fsSL https://get.docker.com | sudo sh
+□ Add user to docker: sudo usermod -aG docker $USER
+□ Install Docker Compose: sudo apt install docker-compose-plugin -y
+□ Configure firewall: sudo ufw allow 22/tcp && sudo ufw allow 80/tcp
+□ Exit and reconnect to apply docker group
+
+✅ STEP 5: Deploy Application
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Option A - Automatic (recommended):
+□ Push to GitHub: git push origin main
+□ Watch GitHub Actions: github.com/.../actions
+
+Option B - Manual:
+□ Clone repo on VM: git clone https://github.com/ShreyasGowda2004/crud-dd-task-mean-app.git
+□ Create .env file
+□ Run: docker compose up -d
+
+✅ STEP 6: Verify Deployment
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Check containers: docker compose ps
+□ Test health: curl http://localhost/health
+□ Test API: curl http://localhost/api/tutorials
+□ Open browser: http://YOUR_VM_IP
+□ Test CRUD operations in web interface
+
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                               SUCCESS!                                        ║
+║         Your MEAN stack application is now live on Azure! 🎉                 ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+📝 IMPORTANT FILES REFERENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AZURE_FORM_GUIDE.txt    → Detailed "Basics" tab guide
+AZURE_TABS_GUIDE.txt    → All remaining tabs guide  
+DEPLOYMENT_KEYS.txt     → SSH keys & secrets reference
+AZURE_VM_SETUP.md       → Complete setup documentation
+PROJECT_README.md       → Full project documentation
+QUICKSTART.md           → Fast-track deployment guide
+
+🔥 QUICK COMMANDS REFERENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Connect to VM:          ssh -i ~/.ssh/azure_vm_key azureuser@VM_IP
+View containers:        docker compose ps
+View logs:              docker compose logs -f
+Restart services:       docker compose restart
+Stop services:          docker compose down
+Start services:         docker compose up -d
+Check disk space:       df -h
+Check memory:           free -h
+
+💰 COST MANAGEMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Stop VM (in Azure Portal):     VM → Stop (still charges for storage)
+Deallocate VM (saves money):   VM → Stop (deallocated) or use CLI
+Start VM:                       VM → Start
+
+Estimated costs:
+- VM (Standard_B2s):            ~$30-35/month
+- Storage (30 GB SSD):          ~$3-5/month  
+- Bandwidth (typical):          ~$0-5/month
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TOTAL:                          ~$33-45/month
+
+⚠️  SECURITY REMINDER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Delete DEPLOYMENT_KEYS.txt after setup
+□ Never commit private keys to Git
+□ Keep Azure Portal password secure
+□ Use Docker Hub access tokens (not password)
+□ Regularly update system: sudo apt update && sudo apt upgrade
