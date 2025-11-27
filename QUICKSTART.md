@@ -433,6 +433,6 @@ After successful deployment:
 
 ---
 
-**🎊 Congratulations! Your MEAN stack application is now live!**
+
 
 Access your application at: `http://<your-vm-ip>`
