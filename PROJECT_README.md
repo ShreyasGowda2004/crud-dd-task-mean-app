@@ -45,7 +45,7 @@ A full-stack CRUD application built with MongoDB, Express.js, Angular 15, and No
 └─────────────┬───────────────────┬───────────────┘
               │                   │
               │                   │
-    ┌─────────▼─────────┐  ┌─────▼──────────┐
+    ┌─────────▼─────────┐  ┌─────▼───────────┐
     │   Frontend:80     │  │  Backend:8080   │
     │   (Angular 15)    │  │  (Node.js)      │
     └───────────────────┘  └────────┬────────┘
@@ -392,41 +392,7 @@ curl http://localhost/health
 curl http://localhost/api/tutorials
 ```
 
-## 🔒 Security Notes
 
-- Environment variables are stored in GitHub Secrets
-- SSH keys are used for secure VM access
-- CORS is configured for specific origins
-- MongoDB data is persisted in Docker volumes
-- Images use Alpine Linux for smaller attack surface
-
-## 📚 Additional Resources
-
-- [Docker Documentation](https://docs.docker.com/)
-- [Docker Compose Documentation](https://docs.docker.com/compose/)
-- [Angular Documentation](https://angular.io/docs)
-- [Express.js Documentation](https://expressjs.com/)
-- [MongoDB Documentation](https://docs.mongodb.com/)
-- [Nginx Documentation](https://nginx.org/en/docs/)
-
-## 📝 License
-
-This project is created for educational and demonstration purposes.
-
-## 👥 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## 📧 Support
-
-For questions or issues:
-- Check the [DEPLOYMENT.md](./DEPLOYMENT.md) guide
-- Review application logs
-- Open a GitHub issue
 
 
 
