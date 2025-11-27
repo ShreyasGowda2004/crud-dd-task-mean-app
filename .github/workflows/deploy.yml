@@ -93,16 +93,16 @@ jobs:
             export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
             
             # Stop and remove old containers
-            docker-compose down
+            docker compose down
             
             # Start new containers
-            docker-compose up -d
+            docker compose up -d
             
             # Clean up old images
             docker image prune -af
             
             # Show running containers
-            docker-compose ps
+            docker compose ps
           EOF
 
       - name: Verify deployment
@@ -114,7 +114,7 @@ jobs:
             # Check if containers are running
             if [ $(docker ps -q | wc -l) -lt 4 ]; then
               echo "Error: Not all containers are running"
-              docker-compose logs
+              docker compose logs
               exit 1
             fi
             
