@@ -1,13 +1,25 @@
 # 🚀 Quick Start Guide
 
+## 🌐 **LIVE APPLICATION**
+
+**✅ The application is already deployed and accessible at:**
+👉 **http://4.240.92.132**
+
+### Quick Test:
+- Open http://4.240.92.132 in your browser
+- Try creating, viewing, editing, and deleting tutorials
+- API endpoint: http://4.240.92.132/api/tutorials
+
+---
+
 This guide will help you get the MEAN stack application up and running quickly.
 
 ## 📋 Prerequisites Checklist
 
 Before you begin, ensure you have:
 - [ ] GitHub account
-- [ ] Docker Hub account
-- [ ] Ubuntu VM (AWS/Azure/Other cloud)
+- [ ] Docker Hub account  
+- [ ] Ubuntu VM (AWS/Azure/Other cloud) - **✅ COMPLETED (Azure VM: 4.240.92.132)**
 - [ ] Docker installed locally (optional, for testing)
 - [ ] Git installed
 
@@ -17,14 +29,14 @@ Before you begin, ensure you have:
 
 ### Step 1: Clone the repository
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/ShreyasGowda2004/crud-dd-task-mean-app.git
 cd crud-dd-task-mean-app
 ```
 
 ### Step 2: Create environment file
 ```bash
 # Create .env file
-echo "DOCKER_USERNAME=your-dockerhub-username" > .env
+echo "DOCKER_USERNAME=shreyasgowda2004" > .env
 ```
 
 ### Step 3: Start the application
@@ -63,7 +75,7 @@ git init
 git add .
 git commit -m "Initial commit with Docker and CI/CD"
 git branch -M main
-git remote add origin <your-repository-url>
+git remote add origin https://github.com/ShreyasGowda2004/crud-dd-task-mean-app.git
 git push -u origin main
 ```
 
@@ -90,30 +102,27 @@ git push -u origin main
 
 #### 3.1: Launch Ubuntu VM
 
-**AWS EC2:**
-```bash
-# Launch Ubuntu 22.04 LTS instance
-# Instance type: t2.medium or higher
-# Security group: Allow ports 22, 80, 443
-```
-
-**Azure:**
-```bash
-# Create Ubuntu 22.04 LTS VM
-# Size: Standard_B2s or higher
-# Allow ports: 22, 80, 443
-```
+**✅ COMPLETED - Azure VM Details:**
+- **VM Name**: mean-app-vm
+- **Public IP**: 4.240.92.132
+- **Region**: Central India
+- **Size**: Standard_B2s (2 vCPUs, 4 GiB RAM)
+- **OS**: Ubuntu 22.04 LTS
+- **Ports Open**: 22 (SSH), 80 (HTTP), 443 (HTTPS)
+- **Username**: azureuser
 
 #### 3.2: Setup VM
 ```bash
-# SSH into your VM
-ssh -i <your-key.pem> ubuntu@<vm-public-ip>
+# SSH into your VM (already completed)
+ssh -i ~/.ssh/azure_vm_key azureuser@4.240.92.132
 
 # Download and run setup script
-wget https://raw.githubusercontent.com/<your-username>/crud-dd-task-mean-app/main/scripts/setup-vm.sh
+wget https://raw.githubusercontent.com/ShreyasGowda2004/crud-dd-task-mean-app/main/scripts/setup-vm.sh
 chmod +x setup-vm.sh
 ./setup-vm.sh
 ```
+
+**✅ COMPLETED:** Docker 29.0.4 and Docker Compose 2.40.3 already installed
 
 **Or manually install Docker:**
 ```bash
@@ -145,19 +154,21 @@ cd ~/mean-app
 
 ### Phase 4: SSH Key Setup for CI/CD (5 minutes)
 
+**✅ COMPLETED**
+
 #### 4.1: Generate SSH key pair
 ```bash
-# On your local machine or VM
-ssh-keygen -t rsa -b 4096 -C "github-actions" -f ~/.ssh/github_actions_key -N ""
+# On your local machine (already completed)
+ssh-keygen -t rsa -b 4096 -C "github-actions" -f ~/.ssh/azure_vm_key -N ""
 ```
 
 #### 4.2: Add public key to VM
 ```bash
 # View public key
-cat ~/.ssh/github_actions_key.pub
+cat ~/.ssh/azure_vm_key.pub
 
-# SSH into VM and add it
-ssh -i <your-key.pem> ubuntu@<vm-public-ip>
+# SSH into VM and add it (already completed)
+ssh -i ~/.ssh/azure_vm_key azureuser@4.240.92.132
 echo "<paste-public-key-here>" >> ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 exit
@@ -166,7 +177,7 @@ exit
 #### 4.3: Save private key for GitHub
 ```bash
 # Display private key
-cat ~/.ssh/github_actions_key
+cat ~/.ssh/azure_vm_key
 
 # Copy the entire output (including BEGIN and END lines)
 ```
@@ -175,17 +186,19 @@ cat ~/.ssh/github_actions_key
 
 ### Phase 5: GitHub Secrets Configuration (5 minutes)
 
+**✅ COMPLETED - All 5 secrets configured**
+
 1. Go to your GitHub repository
 2. Click **Settings** → **Secrets and variables** → **Actions**
 3. Click **New repository secret** for each:
 
 | Secret Name | Value | Where to Get It |
-|------------|-------|-----------------|
-| `DOCKER_USERNAME` | Your Docker Hub username | Docker Hub account |
-| `DOCKER_PASSWORD` | Docker Hub password/token | Docker Hub access token |
-| `VM_HOST` | VM public IP address | Cloud provider console |
-| `VM_USERNAME` | `ubuntu` | VM default user |
-| `VM_SSH_KEY` | Private SSH key | Output of `cat ~/.ssh/github_actions_key` |
+|------------|-------|------------------|
+| `DOCKER_USERNAME` | shreyasgowda2004 | Docker Hub account |
+| `DOCKER_PASSWORD` | Docker Hub token | Docker Hub access token |
+| `VM_HOST` | 4.240.92.132 | Azure portal |
+| `VM_USERNAME` | azureuser | Azure VM default user |
+| `VM_SSH_KEY` | Private SSH key | Output of `cat ~/.ssh/azure_vm_key` |
 
 **Important:** Copy the **entire** private key including:
 ```
@@ -197,6 +210,8 @@ cat ~/.ssh/github_actions_key
 ---
 
 ### Phase 6: First Deployment (10 minutes)
+
+**✅ COMPLETED - Application successfully deployed!**
 
 #### Option A: Automatic via CI/CD
 ```bash
@@ -213,55 +228,61 @@ git push origin main
 ```bash
 # From your local machine
 ./scripts/deploy-to-vm.sh \
-  <vm-public-ip> \
-  ubuntu \
-  ~/.ssh/your-key.pem \
-  your-dockerhub-username
+  4.240.92.132 \
+  azureuser \
+  ~/.ssh/azure_vm_key \
+  shreyasgowda2004
 ```
 
 ---
 
 ### Phase 7: Verify Deployment (2 minutes)
 
+**✅ VERIFIED - All services running!**
+
 #### Check if services are running
 ```bash
 # SSH into VM
-ssh ubuntu@<vm-public-ip>
+ssh -i ~/.ssh/azure_vm_key azureuser@4.240.92.132
 
 cd ~/mean-app
 docker compose ps
 
 # All 4 containers should be running:
-# - mean-mongodb
-# - mean-backend
-# - mean-frontend
-# - mean-nginx
+# ✅ mean-mongodb
+# ✅ mean-backend
+# ✅ mean-frontend
+# ✅ mean-nginx
 ```
 
 #### Test the application
 ```bash
 # Health check
-curl http://<vm-public-ip>/health
+curl http://4.240.92.132/health
+# Output: "healthy" ✅
 
 # API test
-curl http://<vm-public-ip>/api/tutorials
+curl http://4.240.92.132/api/tutorials
+# Output: [] ✅
 
 # Open in browser
-http://<vm-public-ip>
+http://4.240.92.132
 ```
 
 ---
 
-## 🎉 Success Checklist
+## Ἰ9 Success Checklist
 
-- [ ] Application loads in browser at `http://<vm-ip>`
-- [ ] Can create a new tutorial
-- [ ] Can view tutorials list
-- [ ] Can edit tutorials
-- [ ] Can delete tutorials
-- [ ] Can search tutorials by title
-- [ ] API responds at `http://<vm-ip>/api/tutorials`
-- [ ] All 4 containers running (`docker compose ps`)
+**✅ ALL COMPLETED - Application fully functional at http://4.240.92.132**
+
+- [✅] Application loads in browser at `http://4.240.92.132`
+- [✅] Can create a new tutorial
+- [✅] Can view tutorials list
+- [✅] Can edit tutorials
+- [✅] Can delete tutorials
+- [✅] Can search tutorials by title
+- [✅] API responds at `http://4.240.92.132/api/tutorials`
+- [✅] All 4 containers running (`docker compose ps`)
 
 ---
 
@@ -297,7 +318,7 @@ docker system prune -a
 
 ```bash
 # Build images locally
-./scripts/build-and-push.sh your-dockerhub-username
+./scripts/build-and-push.sh shreyasgowda2004
 
 # Test locally
 docker compose up -d
@@ -315,12 +336,12 @@ docker compose down
 
 ### Issue: Cannot SSH into VM
 ```bash
-# Check VM security group allows port 22
+# Check VM security group allows port 22 (✅ Already configured)
 # Verify key permissions
-chmod 600 ~/.ssh/your-key.pem
+chmod 600 ~/.ssh/azure_vm_key
 
 # Test connection
-ssh -v ubuntu@<vm-ip>
+ssh -v -i ~/.ssh/azure_vm_key azureuser@4.240.92.132
 ```
 
 ### Issue: Containers not starting
@@ -396,15 +417,19 @@ After successful deployment:
 
 ## ⏱️ Total Time Estimate
 
+**✅ COMPLETED - Full production setup finished!**
+
 - **Quick Local Test**: 5 minutes
-- **Full Production Setup**: ~45 minutes
-  - GitHub: 5 min
-  - Docker Hub: 3 min
-  - VM Setup: 15 min
-  - SSH Keys: 5 min
-  - GitHub Secrets: 5 min
-  - Deployment: 10 min
-  - Verification: 2 min
+- **Full Production Setup**: ~45 minutes ✅
+  - GitHub: 5 min ✅
+  - Docker Hub: 3 min ✅
+  - VM Setup: 15 min ✅
+  - SSH Keys: 5 min ✅
+  - GitHub Secrets: 5 min ✅
+  - Deployment: 10 min ✅
+  - Verification: 2 min ✅
+
+**🌐 Live Application**: http://4.240.92.132
 
 ---
 

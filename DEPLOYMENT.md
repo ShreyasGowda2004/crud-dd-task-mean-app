@@ -1,5 +1,17 @@
 # MEAN Stack Application - Deployment Guide
 
+## 🌐 **LIVE DEPLOYMENT STATUS**
+
+**✅ Application successfully deployed and running!**
+
+- **Live URL**: http://4.240.92.132
+- **VM**: Azure Standard_B2s (Central India, 4.240.92.132)
+- **Docker Hub**: shreyasgowda2004/mean-backend & shreyasgowda2004/mean-frontend
+- **GitHub**: https://github.com/ShreyasGowda2004/crud-dd-task-mean-app
+- **Status**: All 4 containers running (MongoDB, Backend, Frontend, Nginx)
+
+---
+
 This guide provides comprehensive instructions for deploying the MEAN stack application using Docker, Docker Compose, and CI/CD with GitHub Actions.
 
 ## Table of Contents
@@ -29,7 +41,7 @@ This guide provides comprehensive instructions for deploying the MEAN stack appl
 
 ### 1. Clone the repository
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/ShreyasGowda2004/crud-dd-task-mean-app.git
 cd crud-dd-task-mean-app
 ```
 
@@ -37,7 +49,7 @@ cd crud-dd-task-mean-app
 
 ```bash
 # Create .env file
-echo "DOCKER_USERNAME=your-dockerhub-username" > .env
+echo "DOCKER_USERNAME=shreyasgowda2004" > .env
 
 # Using Podman
 podman-compose up -d
@@ -83,55 +95,42 @@ Note: Repositories will be created automatically when you push images.
 
 ## Ubuntu VM Setup
 
+**✅ COMPLETED - VM Details:**
+- **Provider**: Azure
+- **VM Name**: mean-app-vm
+- **Public IP**: 4.240.92.132
+- **Region**: Central India
+- **Size**: Standard_B2s (2 vCPUs, 4 GiB RAM)
+- **OS**: Ubuntu 22.04 LTS
+- **Username**: azureuser
+
 ### 1. Launch an Ubuntu VM
-- **AWS**: Use EC2 with Ubuntu 22.04 LTS
-- **Azure**: Use Virtual Machine with Ubuntu 22.04 LTS
-- **Other cloud providers**: Use Ubuntu 22.04 LTS
+✅ **Already provisioned on Azure**
 
 ### 2. Configure Security Groups/Firewall
-Open the following ports:
-- Port 22 (SSH)
-- Port 80 (HTTP)
-- Port 443 (HTTPS - optional)
+✅ **Completed - Ports opened:**
+- Port 22 (SSH) ✅
+- Port 80 (HTTP) ✅
+- Port 443 (HTTPS) ✅
 
 ### 3. SSH into your VM
 ```bash
-ssh -i <your-key.pem> ubuntu@<vm-public-ip>
+ssh -i ~/.ssh/azure_vm_key azureuser@4.240.92.132
 ```
 
 ### 4. Install Docker
+✅ **Completed - Installed versions:**
+- Docker: 29.0.4
+- Docker Compose: 2.40.3
+
 ```bash
-# Update package index
-sudo apt-get update
-
-# Install dependencies
-sudo apt-get install -y ca-certificates curl gnupg lsb-release
-
-# Add Docker's official GPG key
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
-# Set up Docker repository
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# Install Docker Engine
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-
-# Add user to docker group
-sudo usermod -aG docker $USER
-
-# Apply group changes
-newgrp docker
-
 # Verify installation
 docker --version
 docker compose version
 ```
 
 ### 5. Create application directory
+✅ **Completed**
 ```bash
 mkdir -p ~/mean-app
 cd ~/mean-app
@@ -179,7 +178,7 @@ cd crud-dd-task-mean-app
 git init
 
 # Add remote
-git remote add origin <your-repository-url>
+git remote add origin https://github.com/ShreyasGowda2004/crud-dd-task-mean-app.git
 
 # Add all files
 git add .
@@ -196,39 +195,45 @@ git push -u origin main
 
 ## CI/CD Configuration
 
+**✅ COMPLETED - All CI/CD components configured**
+
 ### 1. Generate SSH Key for VM access
 On your **local machine** or VM:
 ```bash
-ssh-keygen -t rsa -b 4096 -C "github-actions" -f ~/.ssh/github_actions_key -N ""
+ssh-keygen -t rsa -b 4096 -C "github-actions" -f ~/.ssh/azure_vm_key -N ""
 ```
+✅ **Completed** - Key stored at `~/.ssh/azure_vm_key`
 
 ### 2. Add public key to VM
 ```bash
 # Copy the public key
-cat ~/.ssh/github_actions_key.pub
+cat ~/.ssh/azure_vm_key.pub
 
 # SSH into VM and add the key
-ssh -i <your-key.pem> ubuntu@<vm-public-ip>
+ssh -i ~/.ssh/azure_vm_key azureuser@4.240.92.132
 echo "<paste-public-key-here>" >> ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 ```
+✅ **Completed** - Public key added to VM
 
 ### 3. Configure GitHub Secrets
 Go to your GitHub repository → Settings → Secrets and variables → Actions
 
+**✅ All 5 secrets configured successfully**
+
 Add the following secrets:
 
 | Secret Name | Description | Example |
-|------------|-------------|---------|
-| `DOCKER_USERNAME` | Your Docker Hub username | `johndoe` |
-| `DOCKER_PASSWORD` | Your Docker Hub password or access token | `your-password` |
-| `VM_HOST` | Your VM's public IP address | `54.123.45.67` |
-| `VM_USERNAME` | SSH username for VM | `ubuntu` |
-| `VM_SSH_KEY` | Private SSH key content | Content of `~/.ssh/github_actions_key` |
+|------------|-------------|----------|
+| `DOCKER_USERNAME` | Your Docker Hub username | `shreyasgowda2004` ✅ |
+| `DOCKER_PASSWORD` | Your Docker Hub password or access token | Docker Hub token ✅ |
+| `VM_HOST` | Your VM's public IP address | `4.240.92.132` ✅ |
+| `VM_USERNAME` | SSH username for VM | `azureuser` ✅ |
+| `VM_SSH_KEY` | Private SSH key content | Content of `~/.ssh/azure_vm_key` ✅ |
 
 To get the SSH private key:
 ```bash
-cat ~/.ssh/github_actions_key
+cat ~/.ssh/azure_vm_key
 ```
 Copy the entire output including `-----BEGIN OPENSSH PRIVATE KEY-----` and `-----END OPENSSH PRIVATE KEY-----`
 
@@ -236,8 +241,10 @@ Copy the entire output including `-----BEGIN OPENSSH PRIVATE KEY-----` and `----
 
 ## Deployment
 
+**✅ DEPLOYED - Application live at http://4.240.92.132**
+
 ### Automatic Deployment (CI/CD)
-Once configured, any push to the `main` or `master` branch will trigger:
+✅ **Working** - Once configured, any push to the `main` or `master` branch will trigger:
 1. Build Docker images for backend and frontend
 2. Push images to Docker Hub
 3. Deploy to your VM automatically
@@ -247,7 +254,7 @@ If you need to deploy manually:
 
 ```bash
 # SSH into VM
-ssh ubuntu@<vm-public-ip>
+ssh -i ~/.ssh/azure_vm_key azureuser@4.240.92.132
 
 cd ~/mean-app
 
@@ -266,15 +273,17 @@ docker compose logs -f
 
 ## Accessing the Application
 
+**✅ Application is live and accessible!**
+
 Once deployed, access the application at:
 ```
-http://<vm-public-ip>
+http://4.240.92.132
 ```
 
 ### API Endpoints
-- Frontend: `http://<vm-public-ip>/`
-- Backend API: `http://<vm-public-ip>/api/tutorials`
-- Health Check: `http://<vm-public-ip>/health`
+- Frontend: `http://4.240.92.132/` ✅
+- Backend API: `http://4.240.92.132/api/tutorials` ✅
+- Health Check: `http://4.240.92.132/health` ✅ (Returns: "healthy")
 
 ---
 

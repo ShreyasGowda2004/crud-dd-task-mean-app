@@ -1,5 +1,21 @@
 # 📦 Project Deliverables Summary
 
+## 🌐 Live Deployment Status
+
+**✅ Application Successfully Deployed!**
+
+- **Live URL:** http://4.240.92.132
+- **GitHub Repository:** https://github.com/ShreyasGowda2004/crud-dd-task-mean-app
+- **Docker Hub Images:** https://hub.docker.com/u/shreyasgowda2004
+- **Platform:** Azure VM (Standard_B2s - 2 vCPUs, 4 GiB RAM)
+- **OS:** Ubuntu 22.04 LTS
+- **Region:** Central India
+- **VM IP:** 4.240.92.132
+- **Deployment:** Automated via GitHub Actions CI/CD
+- **Status:** All 4 containers running (MongoDB, Backend, Frontend, Nginx)
+
+---
+
 ## ✅ Completed Tasks
 
 ### 1. Repository Setup ✓
@@ -188,7 +204,7 @@ Frontend   Backend
 - Production uses relative paths through Nginx
 
 **Docker Compose:**
-- `DOCKER_USERNAME`: For image names
+- `DOCKER_USERNAME`: shreyasgowda2004 (Docker Hub username for images)
 
 ### CI/CD Workflow Triggers
 

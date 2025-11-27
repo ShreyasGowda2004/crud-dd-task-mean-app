@@ -2,6 +2,17 @@
 
 A full-stack CRUD application built with MongoDB, Express.js, Angular 15, and Node.js. This project demonstrates containerization, deployment, and CI/CD practices.
 
+## 🌐 **LIVE DEPLOYMENT**
+
+**✅ Application is live and accessible at:**
+👉 **http://4.240.92.132**
+
+- **VM**: Azure Standard_B2s (Central India)
+- **Docker Hub**: [shreyasgowda2004/mean-backend](https://hub.docker.com/r/shreyasgowda2004/mean-backend) & [shreyasgowda2004/mean-frontend](https://hub.docker.com/r/shreyasgowda2004/mean-frontend)
+- **GitHub**: [ShreyasGowda2004/crud-dd-task-mean-app](https://github.com/ShreyasGowda2004/crud-dd-task-mean-app)
+
+---
+
 ## 📋 Table of Contents
 - [Features](#features)
 - [Architecture](#architecture)
@@ -117,7 +128,7 @@ crud-dd-task-mean-app/
 
 #### 1. Clone the repository
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/ShreyasGowda2004/crud-dd-task-mean-app.git
 cd crud-dd-task-mean-app
 ```
 
@@ -191,37 +202,41 @@ podman-compose down   # or: docker compose down
 #### Backend
 ```bash
 cd backend
-podman build -t docker.io/your-username/mean-backend:latest .
+podman build -t docker.io/shreyasgowda2004/mean-backend:latest .
 podman run -d -p 8080:8080 \
   -e MONGODB_URI=mongodb://host.docker.internal:27017/dd_db \
-  docker.io/your-username/mean-backend:latest
+  docker.io/shreyasgowda2004/mean-backend:latest
 ```
 
 #### Frontend
 ```bash
 cd frontend
-podman build -t docker.io/your-username/mean-frontend:latest .
-podman run -d -p 4200:80 docker.io/your-username/mean-frontend:latest
+podman build -t docker.io/shreyasgowda2004/mean-frontend:latest .
+podman run -d -p 4200:80 docker.io/shreyasgowda2004/mean-frontend:latest
 ```
 
 **Note**: Replace `podman` with `docker` if using Docker instead of Podman.
 
 ## 📦 Deployment
 
+**✅ DEPLOYED - Live at http://4.240.92.132**
+
 For detailed deployment instructions including VM setup, Docker Hub configuration, and CI/CD setup, see **[DEPLOYMENT.md](./DEPLOYMENT.md)**.
 
 ### Quick Deployment Steps
 
-1. **Set up Docker Hub account**
-2. **Launch Ubuntu VM** on AWS/Azure
-3. **Install Docker and Docker Compose** on VM
-4. **Configure GitHub Secrets**:
+✅ **All steps completed:**
+
+1. **Set up Docker Hub account** ✅ (shreyasgowda2004)
+2. **Launch Ubuntu VM** on AWS/Azure ✅ (Azure: 4.240.92.132)
+3. **Install Docker and Docker Compose** on VM ✅
+4. **Configure GitHub Secrets** ✅:
    - `DOCKER_USERNAME`
    - `DOCKER_PASSWORD`
    - `VM_HOST`
    - `VM_USERNAME`
    - `VM_SSH_KEY`
-5. **Push to GitHub** - CI/CD will automatically deploy
+5. **Push to GitHub** - CI/CD will automatically deploy ✅
 
 ## 🔄 CI/CD Pipeline
 

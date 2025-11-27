@@ -12,6 +12,17 @@ A full-stack CRUD application using the MEAN stack (MongoDB, Express, Angular 15
 - CI/CD pipeline with GitHub Actions
 - Ready for production deployment
 
+## 🌐 Live Deployment
+
+**Application is live at:** http://4.240.92.132
+
+### Deployed Infrastructure:
+- **Platform:** Azure VM (Standard_B2s, 2 vCPUs, 4 GiB RAM)
+- **OS:** Ubuntu 22.04 LTS
+- **Region:** Central India
+- **CI/CD:** GitHub Actions
+- **Docker Images:** https://hub.docker.com/u/shreyasgowda2004
+
 ## 📦 Quick Start with Podman/Docker
 
 ### Prerequisites
@@ -20,11 +31,11 @@ A full-stack CRUD application using the MEAN stack (MongoDB, Express, Angular 15
 
 ### 1. Clone and Setup
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/ShreyasGowda2004/crud-dd-task-mean-app.git
 cd crud-dd-task-mean-app
 
 # Create .env file
-echo "DOCKER_USERNAME=your-dockerhub-username" > .env
+echo "DOCKER_USERNAME=shreyasgowda2004" > .env
 ```
 
 ### 2. Start Application
